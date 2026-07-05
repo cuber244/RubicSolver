@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CubeSolver</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧊</text></svg>" />
+    <script type="module" crossorigin src="./assets/index-B0xarNyv.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DKX4_oEq.css">
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">
+          <h1>CubeSolver</h1>
+          <span class="subtitle" data-i18n="subtitle"></span>
+        </div>
+        <div class="topbar-right">
+          <span id="status" class="status"></span>
+          <button id="langToggle" class="btn small"></button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="left">
+          <div id="cube3d" class="cube3d">
+            <button id="resetView" class="btn small reset-view" data-i18n="reset_view"></button>
+          </div>
+          <div class="playback-bar">
+            <div id="playbackControls" class="playback-controls"></div>
+            <label class="speed">
+              <span data-i18n="playback_speed"></span>
+              <input id="speed" type="range" min="0" max="100" value="60" />
+            </label>
+          </div>
+        </section>
+
+        <section class="right">
+          <div class="panel">
+            <h2 data-i18n="scramble"></h2>
+            <div class="scramble-row">
+              <input id="scrambleInput" type="text" spellcheck="false"
+                placeholder="R U R' U' F2 D ..." />
+            </div>
+            <div class="row">
+              <button id="genScramble" class="btn primary" data-i18n="generate"></button>
+              <button id="applyScramble" class="btn" data-i18n="apply"></button>
+              <button id="resetCube" class="btn" data-i18n="reset"></button>
+            </div>
+            <p id="scrambleError" class="error"></p>
+          </div>
+
+          <div class="panel">
+            <div class="tabs" id="methodTabs">
+              <button class="tab active" data-method="cfop" data-i18n="method_cfop"></button>
+              <button class="tab" data-method="roux" data-i18n="method_roux"></button>
+              <button class="tab" data-method="optimal" data-i18n="method_optimal"></button>
+            </div>
+            <button id="solveBtn" class="btn primary wide" data-i18n="solve"></button>
+            <p id="solveError" class="error"></p>
+            <div id="solutionList" class="solution-list"></div>
+          </div>
+
+          <div class="panel">
+            <h2 data-i18n="smartcube"></h2>
+            <div class="row gan-row">
+              <button id="ganConnect" class="btn primary" data-i18n="gan_connect"></button>
+              <span id="ganStatus" class="status"></span>
+              <span id="ganBattery" class="battery"></span>
+            </div>
+            <div class="scramble-row">
+              <input id="ganMac" type="text" spellcheck="false" placeholder="MAC: AB:12:34:56:78:9A" />
+            </div>
+            <p class="net-hint" data-i18n="gan_mac_hint"></p>
+            <div class="row">
+              <button id="ganSync" class="btn" data-i18n="gan_sync" disabled></button>
+              <button id="ganMarkSolved" class="btn" data-i18n="gan_reset" disabled></button>
+            </div>
+            <p id="ganAssistStatus" class="assist-status"></p>
+            <p id="ganError" class="error"></p>
+          </div>
+
+          <details class="panel">
+            <summary data-i18n="editor"></summary>
+            <div id="netEditor"></div>
+            <p id="editorError" class="error"></p>
+          </details>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
