@@ -1,93 +1,94 @@
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#101217" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="360 Viewer" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <title>Insta360 360 Photo Viewer</title>
-    <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="./icon.svg" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5/index.min.css" />
-    <link rel="stylesheet" href="./styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CubeSolver</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧊</text></svg>" />
+    <script defer src="./assets/app.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
   </head>
   <body>
-    <main class="app-shell">
-      <section class="viewer-stage" aria-label="360 photo viewer">
-        <div id="viewer" class="viewer"></div>
+    <div id="app">
+      <header class="topbar">
+        <div class="brand">
+          <h1>CubeSolver</h1>
+          <span class="subtitle" data-i18n="subtitle"></span>
+        </div>
+        <div class="topbar-right">
+          <span id="status" class="status"></span>
+          <button id="langToggle" class="btn small"></button>
+        </div>
+      </header>
 
-        <div id="emptyState" class="empty-state">
-          <div class="empty-mark">360</div>
-          <h1>Insta360 Photo Viewer</h1>
-          <p>Load a 2:1 equirectangular photo, then drag or swipe to look around.</p>
-          <div class="empty-actions">
-            <label class="primary-upload">
-              <input id="photoInput" type="file" accept="image/*" />
-              Select Photo
+      <main class="layout">
+        <section class="left">
+          <div id="cube3d" class="cube3d">
+            <button id="resetView" class="btn small reset-view" data-i18n="reset_view"></button>
+          </div>
+          <p id="assistBar" class="assist-bar"></p>
+          <div class="playback-bar">
+            <div id="playbackControls" class="playback-controls"></div>
+            <label class="speed">
+              <span data-i18n="playback_speed"></span>
+              <input id="speed" type="range" min="0" max="100" value="60" />
             </label>
-            <button id="demoPhoto" type="button" class="secondary-action">Demo</button>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <aside class="control-panel" aria-label="controls">
-        <div class="panel-top">
-          <div>
-            <p class="kicker">Local viewer</p>
-            <h2>360 Photo</h2>
+        <section class="right">
+          <div class="panel" id="scramblePanel">
+            <h2 data-i18n="scramble"></h2>
+            <div class="scramble-row">
+              <input id="scrambleInput" type="text" spellcheck="false"
+                placeholder="R U R' U' F2 D ..." />
+            </div>
+            <div class="row">
+              <button id="genScramble" class="btn primary" data-i18n="generate"></button>
+              <button id="applyScramble" class="btn" data-i18n="apply"></button>
+              <button id="resetCube" class="btn" data-i18n="reset"></button>
+            </div>
+            <button id="camScan" class="btn wide" data-i18n="cam_scan"></button>
+            <p id="scrambleError" class="error"></p>
           </div>
-          <label class="icon-upload" title="Select Photo">
-            <input id="photoInputCompact" type="file" accept="image/*" />
-            <span aria-hidden="true">+</span>
-          </label>
-        </div>
 
-        <dl class="meta-grid">
-          <div>
-            <dt>File</dt>
-            <dd id="fileName">None</dd>
+          <div class="panel" id="solvePanel">
+            <div class="tabs" id="methodTabs">
+              <button class="tab active" data-method="cfop" data-i18n="method_cfop"></button>
+              <button class="tab" data-method="roux" data-i18n="method_roux"></button>
+              <button class="tab" data-method="optimal" data-i18n="method_optimal"></button>
+            </div>
+            <button id="solveBtn" class="btn primary wide" data-i18n="solve"></button>
+            <p id="solveError" class="error"></p>
+            <div id="solutionList" class="solution-list"></div>
           </div>
-          <div>
-            <dt>Image size</dt>
-            <dd id="imageSize">-</dd>
+
+          <div class="panel" id="smartPanel">
+            <h2 data-i18n="smartcube"></h2>
+            <div class="row gan-row">
+              <button id="ganConnect" class="btn primary" data-i18n="gan_connect"></button>
+              <span id="ganStatus" class="status"></span>
+              <span id="ganBattery" class="battery"></span>
+            </div>
+            <div class="scramble-row">
+              <input id="ganMac" type="text" spellcheck="false" placeholder="MAC: AB:12:34:56:78:9A" />
+            </div>
+            <p class="net-hint" data-i18n="gan_mac_hint"></p>
+            <div class="row">
+              <button id="ganSync" class="btn" data-i18n="gan_sync" disabled></button>
+              <button id="ganMarkSolved" class="btn" data-i18n="gan_reset" disabled></button>
+            </div>
+            <p id="ganAssistStatus" class="assist-status"></p>
+            <p id="ganError" class="error"></p>
           </div>
-        </dl>
 
-        <div class="actions">
-          <button id="resetView" type="button" disabled>Reset View</button>
-          <button id="gyroToggle" type="button" disabled>Gyro</button>
-          <button id="fullscreen" type="button" disabled>Fullscreen</button>
-        </div>
-
-        <div class="correction-panel" aria-label="photo correction">
-          <div class="slider-row">
-            <label for="rollOffset">Photo Roll</label>
-            <input id="rollOffset" type="range" min="-30" max="30" step="0.5" value="0" />
-            <output id="rollOffsetValue" for="rollOffset">0°</output>
-          </div>
-          <div class="slider-row">
-            <label for="pitchOffset">Photo Pitch</label>
-            <input id="pitchOffset" type="range" min="-30" max="30" step="0.5" value="0" />
-            <output id="pitchOffsetValue" for="pitchOffset">0°</output>
-          </div>
-          <button id="resetCorrection" type="button" disabled>Reset Correction</button>
-        </div>
-
-        <p id="status" class="status">Photos are loaded only inside this browser.</p>
-      </aside>
-    </main>
-
-    <script type="importmap">
-      {
-          "imports": {
-            "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js",
-          "@photo-sphere-viewer/core": "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core@5/index.module.js"
-        }
-      }
-    </script>
-    <script type="module" src="./app.js"></script>
+          <details class="panel" id="editorPanel">
+            <summary data-i18n="editor"></summary>
+            <div id="netEditor"></div>
+            <p id="editorError" class="error"></p>
+          </details>
+        </section>
+      </main>
+    </div>
   </body>
 </html>
