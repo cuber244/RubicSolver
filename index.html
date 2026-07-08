@@ -37,7 +37,7 @@
         </section>
 
         <section class="right">
-          <div class="panel">
+          <div class="panel" id="scramblePanel">
             <h2 data-i18n="scramble"></h2>
             <div class="scramble-row">
               <input id="scrambleInput" type="text" spellcheck="false"
@@ -52,7 +52,7 @@
             <p id="scrambleError" class="error"></p>
           </div>
 
-          <div class="panel">
+          <div class="panel" id="solvePanel">
             <div class="tabs" id="methodTabs">
               <button class="tab active" data-method="cfop" data-i18n="method_cfop"></button>
               <button class="tab" data-method="roux" data-i18n="method_roux"></button>
@@ -63,7 +63,7 @@
             <div id="solutionList" class="solution-list"></div>
           </div>
 
-          <div class="panel">
+          <div class="panel" id="smartPanel">
             <h2 data-i18n="smartcube"></h2>
             <div class="row gan-row">
               <button id="ganConnect" class="btn primary" data-i18n="gan_connect"></button>
@@ -82,7 +82,7 @@
             <p id="ganError" class="error"></p>
           </div>
 
-          <details class="panel">
+          <details class="panel" id="editorPanel">
             <summary data-i18n="editor"></summary>
             <div id="netEditor"></div>
             <p id="editorError" class="error"></p>
